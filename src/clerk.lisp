@@ -60,7 +60,7 @@
   (setf *jobs* nil))
 
 (defun fire-job-p (job)
-  "Check if it is time to fire a job"
+  "Check if it is time to fire JOB."
   (<= (fire-time job) (get-universal-time)))
 
 (defmethod fire-job ((job job))
@@ -73,13 +73,10 @@ jobs."
     (add-to-jobs-queue name 'every interval body)))
 
 (defun fire-job-if-needed ()
-  (if (fire-job-p (car *jobs*))
-      (progn
-        (fire-job (pop *jobs*))
-        ;; just in case the second job in queue is the same
-        ;; second as the first one. Or there might be a lot of
-        ;; jobs in the queue.
-        (fire-job-if-needed))))
+  (when (fire-job-p (car *jobs*))
+    (progn
+      (fire-job (pop *jobs*))
+      (fire-job-if-needed))))
 
 (defun start ()
   "Start the thread that waits for a jobs to fire."
@@ -89,7 +86,7 @@ jobs."
              (loop
                 (fire-job-if-needed)
                 (sleep 1)))
-         :name "Main scheduler thread.")))
+         :name "Main scheduler thread from clerk.lisp.")))
 
 (defun stop ()
   "Stop scheduler"
@@ -101,5 +98,6 @@ jobs."
   (format stream "JOBS:~%")
   (loop for job in *jobs*
      do (with-slots (name interval fire-time) job
-          (format stream "~A - ~A - ~A~%" name interval fire-time))))
-
+          (format stream "~A - ~A - ~A~%"
+                  name interval
+                  (local-time:universal-to-timestamp fire-time)))))

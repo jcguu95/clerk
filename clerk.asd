@@ -23,7 +23,7 @@
   :depends-on (#:prove)
   :defsystem-depends-on (#:prove-asdf)
   :serial t
-  :components ((:module "t"
+  :components ((:module "test"
                         :components
                         ((:test-file "clerk")
                          (:test-file "time"))))

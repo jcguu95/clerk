@@ -99,6 +99,7 @@ where the number is a positive integer and the `interval-type` if one of the fol
 
 Pretty self-explanatory. The idea is that if you type the day of the week, clerk will calculate when it is and add an event to the queue.
 
-## Issues / Contribution
+## TODO
 
-If you have issues - open a github issue or contact me at `(reverse "moc.liamg@vokist")`. If you want to contribute - open an issue or make a PR. Thanks!
++ [ ] Implement `at` clause.
++ [ ] Implement a declarative + memorizing clerk.

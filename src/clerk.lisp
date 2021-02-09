@@ -95,7 +95,7 @@ jobs."
 
 (defun calendar (&optional (stream *standard-output*))
   "Print the scheduled jobs"
-  (format stream "JOBS:~%")
+  (format stream "JOBS:~%name - interval - fire-time~%~%")
   (loop for job in *jobs*
      do (with-slots (name interval fire-time) job
           (format stream "~A - ~A - ~A~%"
